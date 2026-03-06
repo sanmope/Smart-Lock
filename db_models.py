@@ -4,25 +4,34 @@ from database import Base
 from datetime import datetime
 
 
+class Location(Base):
+    __tablename__ = "locations"
+
+    id = Column(Integer, primary_key=True, index=True)
+    lock_id = Column(Integer, ForeignKey("locks.id"), nullable=False)
+    latitude = Column(Float, nullable=False)
+    longitude = Column(Float, nullable=False)
+
+    # Relationship
+    lock = relationship("Lock", back_populates="location")
+
+
 class Lock(Base):
     __tablename__ = "locks"
 
     id = Column(Integer, primary_key=True, index=True)
-    latitude = Column(Float, nullable=False)
-    longitude = Column(Float, nullable=False)
     status = Column(String, default="inactive")
     last_update = Column(DateTime, default=datetime.now)
 
     # Relationships
+    location = relationship("Location", back_populates="lock", uselist=False)
     events = relationship("SecurityEvent", back_populates="lock")
     assignments = relationship("LockAssignment", back_populates="lock")
 
     @property
     def current_shipment(self):
-        # Returns the active shipment assignment or None
         active = [a for a in self.assignments if a.released_at is None]
         return active[0].shipment if active else None
-
 
 class SecurityEvent(Base):
     __tablename__ = "security_events"
@@ -43,7 +52,7 @@ class Shipment(Base):
     id = Column(Integer, primary_key=True, index=True)
     shipment_id = Column(String, unique=True, nullable=False)
     status = Column(String, default="in_transit")
-
+    last_update = Column(DateTime, default=datetime.now) 
     # Relationship
     assignments = relationship("LockAssignment", back_populates="shipment")
 

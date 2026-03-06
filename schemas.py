@@ -20,7 +20,7 @@ class EventType(str, Enum):
 WARNING_EVENTS = {EventType.BATTERY_LOW, EventType.CONNECTION_LOST}
 CRITICAL_EVENTS = {EventType.UNLOCK_ATTEMPT, EventType.TAMPER_DETECTED, EventType.LOCATION_DEVIATION}
 
-class ShipmentStatus(Enum):
+class HealthStatus(str,Enum):
     OK = "ok"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -35,6 +35,12 @@ class LockStatus(str, Enum):
     TAMPERED = "tampered"
     OFFLINE = "offline"
 
+class ShipmentStatus(str,Enum):
+    IN_TRANSIT = "in_transit"
+    LOADING = "loading"
+    AT_DESTINATION = "at_destination"
+    STOP = "stop"
+
 class LockCreate(BaseModel):
     location: Location
     status: LockStatus = Field(default=LockStatus.ACTIVE, description="El estado del dispositivo de lock.")
@@ -44,6 +50,16 @@ class LockResponse(BaseModel):
     location: Location
     status: LockStatus
     last_update: datetime
+
+class ShipmentCreate(BaseModel):
+    status: ShipmentStatus
+
+class ShipmentResponse(BaseModel):
+    id: int
+    shipment_id: str
+    status: ShipmentStatus
+    last_update: datetime
+
 
 class SecurityEventCreate(BaseModel):
     lock_id: int
@@ -62,4 +78,4 @@ class ShipmentHealth(BaseModel):
     total_locks: int
     compromised_locks: int
     critical_events_last_hour: int
-    overall_status: ShipmentStatus    
+    overall_status: HealthStatus    
