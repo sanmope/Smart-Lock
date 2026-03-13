@@ -89,14 +89,30 @@ Interactive docs at `http://localhost:8000/docs`
 | PATCH | `/shipments/{shipment_id}/locks/{lock_id}/release` | Release a lock from a shipment |
 | GET | `/shipments/{shipment_id}/health` | Get aggregated health status of a shipment |
 
+## Architecture
+
+See [docs/architecture/](docs/architecture/) for the full data pipeline architecture documentation:
+
+- [Overview](docs/architecture/overview.md) — End-to-end architecture, design decisions, project structure
+- [Kafka](docs/architecture/kafka.md) — Topics, Avro schemas, producer and consumer design
+- [Redshift](docs/architecture/redshift.md) — Star schema, DDL, materialized views
+- [PySpark](docs/architecture/pyspark.md) — Streaming and batch processing jobs
+- [Visualization](docs/architecture/visualization.md) — Superset (analytics) + Grafana (monitoring/alerts)
+- [Infrastructure](docs/architecture/infrastructure.md) — Docker Compose (local) and future K8s/Terraform (prod)
+
 ## Roadmap
 
-- [ ] Docker + Docker Compose setup
+- [ ] Docker Compose setup (Kafka, PostgreSQL, Schema Registry, Spark, Superset, Grafana)
+- [ ] Kafka producers in FastAPI (event-driven architecture)
+- [ ] Kafka consumer -> PostgreSQL
+- [ ] Redshift star schema (dimensions, facts, materialized views)
+- [ ] PySpark streaming jobs (Kafka -> Redshift)
+- [ ] PySpark batch jobs (daily/hourly aggregations)
+- [ ] Superset + Grafana dashboards and alerts
 - [ ] Kubernetes deployment manifests
 - [ ] Authentication for lock devices (API keys / JWT)
-- [ ] Alert system for critical events
 - [ ] CI/CD pipeline with GitHub Actions
-- [ ] AWS deployment with Terraform
+- [ ] AWS deployment with Terraform (EKS, MSK, RDS, Redshift, S3)
 
 ## License
 
