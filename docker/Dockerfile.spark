@@ -1,0 +1,14 @@
+FROM apache/spark:3.5.0
+
+USER root
+
+COPY requirements-spark.txt /tmp/
+RUN pip install --no-cache-dir -r /tmp/requirements-spark.txt
+
+COPY spark/ /app/spark/
+COPY kafka/schemas/ /app/kafka/schemas/
+COPY docker/spark-defaults.conf /opt/spark/conf/spark-defaults.conf
+
+WORKDIR /app
+
+USER spark

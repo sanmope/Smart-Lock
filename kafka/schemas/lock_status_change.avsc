@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "LockStatusChange",
+  "namespace": "com.smartlock",
+  "fields": [
+    {"name": "lock_id", "type": "string"},
+    {"name": "action", "type": {"type": "enum", "name": "LockAction", "symbols": ["created", "status_changed", "assigned", "released"]}},
+    {"name": "status", "type": ["null", {"type": "enum", "name": "LockStatus", "symbols": ["active", "inactive", "tampered", "offline"]}], "default": null},
+    {"name": "previous_status", "type": ["null", "LockStatus"], "default": null},
+    {"name": "latitude", "type": ["null", "double"], "default": null},
+    {"name": "longitude", "type": ["null", "double"], "default": null},
+    {"name": "shipment_id", "type": ["null", "string"], "default": null},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "ShipmentStatusChange",
+  "namespace": "com.smartlock",
+  "fields": [
+    {"name": "shipment_id", "type": "string"},
+    {"name": "action", "type": {"type": "enum", "name": "ShipmentAction", "symbols": ["created", "status_changed"]}},
+    {"name": "status", "type": {"type": "enum", "name": "ShipmentStatus", "symbols": ["in_transit", "loading", "at_destination", "stop"]}},
+    {"name": "previous_status", "type": ["null", "ShipmentStatus"], "default": null},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "SecurityEvent",
+  "namespace": "com.smartlock",
+  "fields": [
+    {"name": "event_id", "type": "string"},
+    {"name": "lock_id", "type": "string"},
+    {"name": "event_type", "type": {"type": "enum", "name": "EventType", "symbols": ["unlock_attempt", "tamper_detected", "battery_low", "location_deviation", "connection_lost"]}},
+    {"name": "severity", "type": {"type": "enum", "name": "Severity", "symbols": ["low", "medium", "high", "critical"]}},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}}
+  ]
+}

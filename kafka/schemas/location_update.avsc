@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "LocationUpdate",
+  "namespace": "com.smartlock",
+  "fields": [
+    {"name": "lock_id", "type": "string"},
+    {"name": "latitude", "type": "double"},
+    {"name": "longitude", "type": "double"},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}}
+  ]
+}
